@@ -1,6 +1,9 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <string>
+#include <chrono>
+using namespace std::chrono;
 
 void le_arquivo();
 
@@ -15,19 +18,26 @@ void le_arquivo()
     int numero;
     int tamanho;
     int i;
-    // Abre o arquivo
-    std::ifstream arquivo("entrada1.txt");
+    // Abre os arquivos
+    std::ifstream input("entrada1.txt");
+    std::ofstream output("saida2.txt");
     // Inicializa um vetor de tamanho indeterminado
     std::vector<int> elementos;
+    // Cria uma string para guardar a sequencia utilizada
+    std::string sequencia;
 
-    // Verifica se o arquivo foi aberto
-    if(!arquivo.is_open())
+    // Verifica se os arquivos foram abertos
+    if(!input.is_open())
     {
         std::cerr << "Arquivo nao foi aberto" << std::endl;
     }
+    if(!output.is_open())
+    {
+        std::cerr << "Arquivo de saida nao foi aberto" << std::endl;
+    }
 
     // Enquanto o a variável número estiver recebendo um inteiro do arquivo
-    while(arquivo >> numero)
+    while(input >> numero)
     {
         tamanho = numero;
         // Pega o primeiro elemento da linha e muda a capacidade do vetor usando este valor como tamanho
@@ -38,14 +48,23 @@ void le_arquivo()
         while(i < tamanho)
         {
             // Lê um número do arquivo e coloca no vetor
-            arquivo >> numero;
+            input >> numero;
             std::cout<< numero << " ";
             elementos.push_back(numero);
             i++;
         }
+
+        // Pega o tempo de início da execução do shellsort
+        auto comeco = high_resolution_clock::now();
         // Chama o shellsort com o vetor
-        std::cout << std::endl;
-        std::cout << "Fim do vetor"  << std::endl;
+        // Pega o tempo depois que a função foi executada
+        auto fim = high_resolution_clock::now();
+        // Subtrai um do outro para achar a duração em microssgundos
+        auto duracao = duration_cast<seconds>(fim - comeco);
+        output << sequencia << "," << tamanho << ","  << duracao.count() << "Processador" << std::endl;
     }
+
+    input.close();
+    output.close();
 
 }
