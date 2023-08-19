@@ -46,11 +46,26 @@ class HashTable
         }
     };
 
+    struct grade
+    {
+        int id;
+        float global;
+        int count;
+
+        grade(int id, float global, int count)
+            : id(id), global(global), count(count)
+        {
+        }
+    };
+
+
+
     public:
         static const int hashGroups = 8000;
         list<struct jogador> table[hashGroups]; // Lista1, Index 0, Lista 2, Index 1...
         list<struct tags> table_tags[hashGroups];
         list<struct user> table_users[hashGroups];
+        list<struct grade> table_grade[hashGroups];
         int hashFunction(int key);
         void insertPlayer(int id, string posicoes, float rating, int count);
         void searchPlayer(int id, string nome);
@@ -59,12 +74,118 @@ class HashTable
         void insertUser(int userID, int playerID);
         void searchUser(int userID);
         void printTable();
+        void insertGrade(int id, float rating);
+        void searchGrade(int id, string nome);
+        void att_global();
+        float searchGrade_global(int id);
+        int searchGrade_count(int id);
 };
+
+
+
+
 
 int HashTable::hashFunction(int key)
 {
     return key % hashGroups; // Key: 905, in return this function will spit out 5
 }
+
+void HashTable::att_global()
+{
+    
+    for(int hashValue = 0;  hashValue <= hashGroups; hashValue ++) {
+
+        auto& lista = table_grade[hashValue];
+        auto ptLista = begin(lista);
+        for(; ptLista != end(lista); ptLista++)
+        {
+            float global = ptLista->global;
+            int count = ptLista->count;
+            ptLista->global =  global  / count; //média global do jogador
+        }
+    }
+}
+
+void HashTable::insertGrade(int id, float rating)
+{
+    int hashValue = hashFunction(id);
+    auto& lista = table_grade[hashValue];
+    auto ptLista = begin(lista);
+    bool idExiste = false;
+    for(; ptLista != end(lista); ptLista++)
+    {
+        if(ptLista->id == id)
+        {
+            idExiste = true;
+            ptLista->global += rating;
+            ptLista->count += 1;
+            
+            return;
+        }
+    }
+    if(!idExiste)
+    {
+
+        lista.emplace_back(id, rating, 1);
+        
+    }
+
+    return;
+}
+
+float HashTable::searchGrade_global(int id)
+{
+    int hashValue = hashFunction(id);
+    auto& lista = table_grade[hashValue];
+    auto ptLista = begin(lista);
+    bool idExiste = false;
+    float global = 0.0;
+  
+    for(; ptLista != end(lista); ptLista++)
+    {
+
+        if(ptLista->id == id)
+        {
+            idExiste = true;
+
+            global = ptLista->global;
+            
+            return global;
+        }
+    }
+
+    return global;
+    
+}
+
+int HashTable::searchGrade_count(int id)
+{
+    int hashValue = hashFunction(id);
+    auto& lista = table_grade[hashValue];
+    auto ptLista = begin(lista);
+    bool idExiste = false;
+    int count = 0;
+  
+    for(; ptLista != end(lista); ptLista++)
+    {
+
+        if(ptLista->id == id)
+        {
+            idExiste = true;
+
+            count = ptLista->count;
+            
+            return count;
+        }
+    }
+
+
+    return count;
+
+}
+
+
+
 
 void HashTable::insertPlayer(int id, string posicoes, float rating, int count)
 {
@@ -81,7 +202,7 @@ void HashTable::insertPlayer(int id, string posicoes, float rating, int count)
             ptLista->rating = rating;
             ptLista->count = count;
             // cout << "ID ja existente, jogador alterado." << endl;
-            break;
+            return;
         }
     }
     if(!idExiste)
@@ -214,7 +335,7 @@ void HashTable::insertUser(int userID, int playerID)
         {
             idExiste = true;
             ptLista->ids.push_back(playerID);
-            break;
+            return;
         }
     }
     if(!idExiste)
