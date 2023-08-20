@@ -19,12 +19,13 @@ class HashTable
     struct jogador
     {
         int so_fifa_id;
+        string player_name;
         string player_positions;
         float rating;
         int count;
 
-        jogador(int so_fifa_id, const string& player_positions, float player_rating, int player_count)
-            : so_fifa_id(so_fifa_id), player_positions(player_positions), rating(player_rating), count(player_count)
+        jogador(int so_fifa_id, string player_positions, string player_name, float player_rating, int player_count)
+            : so_fifa_id(so_fifa_id), player_positions(player_positions), player_name(player_name), rating(player_rating), count(player_count)
         {
         }
     };
@@ -72,12 +73,12 @@ class HashTable
         list<struct user> table_users[hashGroups];
         list<struct grade> table_grade[hashGroups];
         int hashFunction(int key);
-        void insertPlayer(int id, string posicoes, float rating, int count);
+        void insertPlayer(int id, string posicoes, string nome, float rating, int count);
         void searchPlayer(int id, string player_nome);
         void insertTag(string tag, int id);
         void searchTag(string tag);
         void insertUser(int userID, int playerID);
-        void searchUser(int userID);
+        vector<int> searchUser(int userID);
         void printTable();
         void insertGrade(int id, float rating);
         void searchGrade(int id, string nome);
@@ -192,7 +193,7 @@ int HashTable::searchGrade_count(int id)
 
 
 
-void HashTable::insertPlayer(int id, string posicoes, float rating, int count)
+void HashTable::insertPlayer(int id, string posicoes, string nome, float rating, int count)
 {
     int hashValue = hashFunction(id);
     auto& lista = table[hashValue];
@@ -213,7 +214,7 @@ void HashTable::insertPlayer(int id, string posicoes, float rating, int count)
     }
     if(!idExiste)
     {
-        lista.emplace_back(id, posicoes, rating, count);
+        lista.emplace_back(id, posicoes, nome, rating, count);
     }
 
     return;
@@ -352,8 +353,9 @@ void HashTable::insertUser(int userID, int playerID)
     return;
 }
 
-void HashTable::searchUser(int userID)
+vector<int> HashTable::searchUser(int userID)
 {
+    vector<int> players_user;
     int hashValue = hashFunction(userID);
 
     auto& lista = table_users[hashValue];
@@ -365,14 +367,14 @@ void HashTable::searchUser(int userID)
         {
             idExiste = true;
             for(int n : ptLista->ids)
-                cout << n << endl;
+                players_user.push_back(n);
             break;
         }
     }
 
     if(!idExiste)
         cout << "User nao encontrado" << endl;
-    return;
+    return players_user;
 }
 
 #endif // HASHTABLE_HPP
