@@ -167,12 +167,7 @@ int main()
 
         if (command == "user")
         {
-            vector<int> user = HT_USER.searchUser(stoi(parameter));
-
-            for(int id : user)
-            {
-                HT_PLAYER.searchPlayer(id);
-            }
+            HT_USER.searchUser(stoi(parameter));
         }
         // Add more command cases here
 
