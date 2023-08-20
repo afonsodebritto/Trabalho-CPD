@@ -59,7 +59,7 @@ int main()
 
         //coloco na hash que coloca em uma lista encadada todos os jogadores que o user avaliou
 
-        HT_USER.insertUser(user, sofifa);
+        HT_USER.insertUser(user, sofifa, grade);
         
     }
 
@@ -157,12 +157,22 @@ int main()
         if (command == "player") {
             // Call 2.1, onde a pesquisa tem por objetivo retornar a lista de jogadores cujo nome começa com um texto 
             // que pode ser o prefixo ou texto completo do nome de um jogador. Todos os jogadores que satisfizerem o texto de consulta devem ser retornados.
-            vector<struct player> jogadores = searchPrefix(raiz, parameter);
+            vector<int> jogadores = searchPrefix(raiz, parameter);
 
-            for(struct player jogador : jogadores){
-                HT_PLAYER.searchPlayer(jogador.id, jogador.nome);
+            for(int id : jogadores){
+                HT_PLAYER.searchPlayer(id);
             }
 
+        }
+
+        if (command == "user")
+        {
+            vector<int> user = HT_USER.searchUser(stoi(parameter));
+
+            for(int id : user)
+            {
+                HT_PLAYER.searchPlayer(id);
+            }
         }
         // Add more command cases here
 
@@ -172,13 +182,6 @@ int main()
             std::cout << "Unknown command." << std::endl;
         }
     }
-
-
-
-    
-
-    
-    vector<int> user_vec = HT_USER.searchUser(118046);
 
     return 0;
 }
