@@ -38,6 +38,7 @@ int main()
     HashTable HT_PLAYER;
     HashTable HT_USER;
     HashTable HT_GRADE;
+    HashTable HT_TAGS;
 
 
     std::string line;
@@ -138,6 +139,46 @@ int main()
 
     playerscsv.close();
 
+
+
+    std::ifstream tagscsv ("tags.csv");
+
+    if (!tagscsv.is_open()) {
+        std::cerr << "Erro ao abrir o arquivo." << std::endl;
+        return 1;
+    }
+
+    std::getline(tagscsv, line); //para desconsiderar a primeira linha que tem apenas "sofifa_id,name,player_positions"
+
+    string tag;  //reusar sofifa_id da leitura do rating.csv
+    //reusar int sofifa também
+
+    while (std::getline(tagscsv, user_id, ',')) {
+ 
+
+        // Use getline para separar as colunas usando a vírgula como delimitador
+        std::getline(playerscsv, sofifa_id, ',');
+        std::getline(playerscsv, tag, '\n');
+
+        sofifa = stoi(sofifa_id);
+
+        
+
+        //inserindo as informaçoes na nossa hash de tags
+
+        HT_TAGS.insertTag(tag, sofifa);
+
+    }
+
+    tagscsv.close();
+
+
+
+
+
+
+
+
     
 
     std::string input;
@@ -190,6 +231,24 @@ int main()
         }else if (command == "tags")
         {
             parameters = extractQuotedParameters(input);
+
+            std::vector<std::vector<int>> vectorOfVectors;
+            vector<int> result_tags;
+
+            for (int i = 0; i < valor; ++i) {
+                std::vector<int> innerVector;
+                // Fill the innerVector with some data (for example, 1, 2, 3)
+                innerVector = HT_TAGS.searchTag_returnIDS(parameters[i]);
+                vectorOfVectors.push_back(innerVector);
+            }
+
+            result_tags = intersectionOfLists(vectorOfVectors);
+
+            for(int id2 : result_tags){
+                HT_PLAYER.searchPlayer(id2);
+            }
+
+
 
         }else if (command == "exit") {
             break;

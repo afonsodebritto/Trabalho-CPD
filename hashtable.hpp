@@ -297,6 +297,20 @@ std::vector<int> intersection(const std::vector<int>& vec1, const std::vector<in
     return result;
 }
 
+std::vector<int> intersectionOfLists(const std::vector<std::vector<int>>& lists) {
+    if (lists.empty()) {
+        return std::vector<int>();  // Return an empty vector if there are no lists
+    }
+    
+    std::vector<int> result = lists[0];  // Initialize result with the first list
+    
+    for (size_t i = 1; i < lists.size(); ++i) {
+        result = intersection(result, lists[i]);  // Find intersection with the next list
+    }
+    
+    return result;
+}
+
 void HashTable::searchTag(string tag)
 {
     int sum = 0;
