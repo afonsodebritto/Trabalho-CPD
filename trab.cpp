@@ -24,7 +24,7 @@ int main()
 
     //começo da leitura de rating.csv
 
-    std::ifstream ratingcsv ("rating.csv");
+    std::ifstream ratingcsv ("minirating.csv");
 
     if (!ratingcsv.is_open()) {
         std::cerr << "Erro ao abrir o arquivo." << std::endl;
@@ -75,9 +75,6 @@ int main()
 
 
     //começo da leitura do players.csv
-
-
-    cout <<  "AQUI" << endl;
 
     //começo da leitura do players.csv
 
@@ -141,26 +138,14 @@ int main()
 
     playerscsv.close();
 
-
-    //fim da leitura do players.csv
-
-    /*
-    HashTable HT2;
-    HT2.insertPlayer(1234, "LW, MC", 8.987, 25);
-    HT2.insertPlayer(145, "CB", 8.91, 56);
-    HT2.searchPlayer(1234, "Neymar");
-    HT2.searchPlayer(145, "Sergio Ramos");
-    */
-
-    
-
-    //searchPrefix(root, "Fer");
-
-
-    HT_PLAYER.searchPlayer(20801, "Cristiano Ronaldo dos Santos Aveiro");
-    HT_PLAYER.searchPlayer(200389, "Jan Oblak");
-
-    HT_USER.searchUser(14183);
+    HT_PLAYER.searchPlayer(158023, "Lionel Andres Messi Cuccittini");
+    vector<struct jogador> players = searchPrefix(raiz, "Fer", players);
+    cout << players[0].nome << endl;
+    for(struct jogador player_atual : players)
+    {
+        HT_PLAYER.searchPlayer(player_atual.id, player_atual.nome);
+    }
+        
 
     return 0;
 }
