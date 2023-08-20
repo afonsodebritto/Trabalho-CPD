@@ -175,10 +175,5 @@ int main()
 
 
 
-    
-
-    
-    vector<int> user_vec = HT_USER.searchUser(118046);
-
     return 0;
 }
