@@ -8,6 +8,7 @@
 #include <climits>
 #include <iostream>
 #include <iomanip>
+#include <utility>
 
 using namespace std;
 
@@ -44,9 +45,9 @@ class HashTable
     struct user
     {
         int userID;
-        vector<int> ids;
+        vector<pair<int, float>> ids;
 
-        user(int user_id, vector<int> ids_players)
+        user(int user_id, vector<pair<int, float>> ids_players)
             : userID(user_id), ids(ids_players)
         {
         }
@@ -74,10 +75,10 @@ class HashTable
         list<struct grade> table_grade[hashGroups];
         int hashFunction(int key);
         void insertPlayer(int id, string posicoes, string nome, float rating, int count);
-        void searchPlayer(int id, string player_nome);
+        void searchPlayer(int id);
         void insertTag(string tag, int id);
         void searchTag(string tag);
-        void insertUser(int userID, int playerID);
+        void insertUser(int userID, int playerID, float playerGrade);
         vector<int> searchUser(int userID);
         void printTable();
         void insertGrade(int id, float rating);
@@ -220,7 +221,7 @@ void HashTable::insertPlayer(int id, string posicoes, string nome, float rating,
     return;
 }
 
-void HashTable::searchPlayer(int id, string player_name)
+void HashTable::searchPlayer(int id)
 {
     int hashValue = hashFunction(id);
     auto& lista = table[hashValue];
@@ -234,7 +235,7 @@ void HashTable::searchPlayer(int id, string player_name)
         {
             idExiste = true;
             cout << ptLista->so_fifa_id << " "
-                 << player_name << " "
+                 << ptLista->player_name << " "
                  << ptLista->player_positions << " "
                  << ptLista->rating << " " 
                  << ptLista->count << endl;
@@ -329,7 +330,7 @@ void HashTable::searchTag(string tag)
     return;
 }
 
-void HashTable::insertUser(int userID, int playerID)
+void HashTable::insertUser(int userID, int playerID, float playerGrade)
 {
     int hashValue = hashFunction(userID);
 
@@ -341,7 +342,7 @@ void HashTable::insertUser(int userID, int playerID)
         if(ptLista->userID == userID)
         {
             idExiste = true;
-            ptLista->ids.push_back(playerID);
+            ptLista->ids.push_back({playerID, playerGrade});
             return;
         }
     }
@@ -366,8 +367,8 @@ vector<int> HashTable::searchUser(int userID)
         if(ptLista->userID == userID)
         {
             idExiste = true;
-            for(int n : ptLista->ids)
-                players_user.push_back(n);
+            for(auto n : ptLista->ids)
+                players_user.push_back(n.first);
             break;
         }
     }
