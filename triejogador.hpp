@@ -73,15 +73,14 @@ bool search(struct TrieNode* root, string nome)
     return(ptArvore->fim_palavra);
 }
 
-vector<struct player> collectWords(struct TrieNode* root, string prefix, vector<struct player> players)
+void collectWords(struct TrieNode* root, string prefix, vector<struct player>* players)
 {
     if(root == nullptr)
-        return players;
+        return;
 
     if(root->fim_palavra)
     {
-        cout << players[0].nome << endl;
-        players.push_back({prefix, root->id});
+        players->push_back({prefix, root->id});
     }
 
     for(int i = 0; i < ASCII_SIZE; i++)
@@ -93,7 +92,6 @@ vector<struct player> collectWords(struct TrieNode* root, string prefix, vector<
         }
     }
 
-    return players;
 }
 
 vector<struct player> searchPrefix(struct TrieNode* root, string prefix)
@@ -109,10 +107,8 @@ vector<struct player> searchPrefix(struct TrieNode* root, string prefix)
         ptArvore = ptArvore->filhos[index];
     }
 
-    collectWords(ptArvore, prefix, players);
+    collectWords(ptArvore, prefix, &players);
 
-    for(struct player jogador : players)
-        cout << jogador.id << jogador.nome << endl;
     return players;
 }
 
