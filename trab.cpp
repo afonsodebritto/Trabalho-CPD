@@ -135,12 +135,12 @@ int main()
 
     playerscsv.close();
 
-    cout << "aqui" << endl;
     //HT_PLAYER.searchPlayer(158023);
     vector<struct player> jogadores = searchPrefix(raiz, "Fer");
-    cout << "terminou" << endl;
-    cout << jogadores[0].id << jogadores[0].nome << endl;
-    cout << "aqui" << endl;
+
+    for(struct player jogador : jogadores)
+        HT_PLAYER.searchPlayer(jogador.id, jogador.nome);
+
         
 
     return 0;

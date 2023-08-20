@@ -73,7 +73,7 @@ class HashTable
         list<struct grade> table_grade[hashGroups];
         int hashFunction(int key);
         void insertPlayer(int id, string posicoes, float rating, int count);
-        void searchPlayer(int id);
+        void searchPlayer(int id, string player_nome);
         void insertTag(string tag, int id);
         void searchTag(string tag);
         void insertUser(int userID, int playerID);
@@ -219,9 +219,8 @@ void HashTable::insertPlayer(int id, string posicoes, float rating, int count)
     return;
 }
 
-void HashTable::searchPlayer(int id)
+void HashTable::searchPlayer(int id, string player_name)
 {
-    cout << "entrou" << endl;
     int hashValue = hashFunction(id);
     auto& lista = table[hashValue];
     auto ptLista = begin(lista);
@@ -234,8 +233,9 @@ void HashTable::searchPlayer(int id)
         {
             idExiste = true;
             cout << ptLista->so_fifa_id << " "
-                 //<< //ptLista->player_name << " "
-                 << ptLista->player_positions << " " 
+                 << player_name << " "
+                 << ptLista->player_positions << " "
+                 << ptLista->rating << " " 
                  << ptLista->count << endl;
             break;
         }
