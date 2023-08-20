@@ -8,7 +8,7 @@
 #include <climits>
 #include <iostream>
 #include <iomanip>
-#include <utility>
+#include "./sorting.hpp"
 #include <algorithm>
 
 using namespace std;
@@ -80,7 +80,7 @@ class HashTable
         void insertTag(string tag, int id);
         void searchTag(string tag);
         void insertUser(int userID, int playerID, float playerGrade);
-        vector<int> searchUser(int userID);
+        void searchUser(int userID);
         void printTable();
         void insertGrade(int id, float rating);
         void searchGrade(int id, string nome);
@@ -371,15 +371,16 @@ void HashTable::insertUser(int userID, int playerID, float playerGrade)
     }
     if(!idExiste)
     {
-        lista.emplace_back(userID, vector<int>{playerID});
+        vector<pair<int,float>> ids;
+        ids.push_back(make_pair(playerID, playerGrade));
+        lista.emplace_back(userID, ids);
     }
 
     return;
 }
 
-vector<int> HashTable::searchUser(int userID)
+void HashTable::searchUser(int userID)
 {
-    vector<int> players_user;
     int hashValue = hashFunction(userID);
 
     auto& lista = table_users[hashValue];
@@ -390,15 +391,32 @@ vector<int> HashTable::searchUser(int userID)
         if(ptLista->userID == userID)
         {
             idExiste = true;
+            vector<pair<int,float>> usuario_atual;
+            int end = 0;
             for(auto n : ptLista->ids)
-                players_user.push_back(n.first);
+            {
+                usuario_atual.push_back(n);
+                end++;
+            }
+                
+            quickSort(usuario_atual, 0, end - 1);
+
+            int controle = 20;
+            while(controle > 0)
+            {
+                if(end <= 0)
+                    break;
+                cout << usuario_atual[end - 1].first << endl;
+                controle--;
+                end--;
+            }
             break;
         }
     }
 
     if(!idExiste)
         cout << "User nao encontrado" << endl;
-    return players_user;
+    return;
 }
 
 #endif // HASHTABLE_HPP
