@@ -125,7 +125,7 @@ int main()
 
         //inserindo as informaçoes na nossa hash principal (int id, const string& positions, float player_rating, int player_count)
 
-        HT_PLAYER.insertPlayer(sofifa, player_positions, global_rating, count);
+        HT_PLAYER.insertPlayer(sofifa, player_positions, name, global_rating, count);
 
         insert(raiz, name, sofifa);
 
@@ -177,7 +177,8 @@ int main()
 
     
 
-        
+    
+    vector<int> user_vec = HT_USER.searchUser(118046);
 
     return 0;
 }
