@@ -7,11 +7,10 @@
 #include <climits>
 #include <iostream>
 #include <iomanip>
-#include "./parser.hpp"
 #include "./hashtable.hpp"
 #include "./triejogador.hpp"
 
-using namespace aria::csv;
+
 using namespace std;
 
 int main()
