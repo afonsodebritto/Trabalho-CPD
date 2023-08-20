@@ -176,6 +176,19 @@ int main()
                 HT_PLAYER.searchPlayer(id);
             }
         }
+
+        // Access the first 3 characters of the command
+        std::string firstThreeCharacters = command.substr(0, 3);
+
+        // Store the rest of the characters in another variable
+        std::string restOfCharacters = command.substr(3);
+
+
+        if (firstThreeCharacters == "top")
+        {
+            
+        }
+
         // Add more command cases here
 
         else if (command == "exit") {
