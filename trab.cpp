@@ -189,9 +189,7 @@ int main()
             
         }
 
-        // Add more command cases here
-
-        else if (command == "exit") {
+        if (command == "exit") {
             break;
         } else {
             std::cout << "Unknown command." << std::endl;

@@ -9,6 +9,7 @@
 #include <iostream>
 #include <iomanip>
 #include <utility>
+#include <algorithm>
 
 using namespace std;
 
@@ -86,6 +87,7 @@ class HashTable
         void att_global();
         float searchGrade_global(int id);
         int searchGrade_count(int id);
+        vector<int> HashTable::searchTag_returnIDS(string tag);
 };
 
 
@@ -283,6 +285,17 @@ void HashTable::insertTag(string tag, int id)
     return;
 }
 
+std::vector<int> intersection(const std::vector<int>& vec1, const std::vector<int>& vec2) {
+    std::vector<int> result;
+    
+    for (const int& value : vec1) {
+        if (std::find(vec2.begin(), vec2.end(), value) != vec2.end()) {
+            result.push_back(value);
+        }
+    }
+    
+    return result;
+}
 
 void HashTable::searchTag(string tag)
 {
@@ -305,6 +318,33 @@ void HashTable::searchTag(string tag)
             for(int n : ptLista->ids)
                 cout << n << endl;
             break;
+        }
+    }
+
+    if(!idExiste)
+        cout << "Tag nao encontrada" << endl;
+    return;
+}
+
+vector<int> HashTable::searchTag_returnIDS(string tag)
+{
+    int sum = 0;
+    for(int i = 0; i < tag.length(); i ++)
+    {
+        sum += tag[i];
+    }
+
+    int hashValue = hashFunction(sum);
+
+    auto& lista = table_tags[hashValue];
+    auto ptLista = begin(lista);
+    bool idExiste = false;
+    for(; ptLista != end(lista); ptLista++)
+    {
+        if(ptLista->tag == tag)
+        {
+            idExiste = true;
+            return ptLista->ids;
         }
     }
 
