@@ -63,7 +63,7 @@ class HashTable
 
 
     public:
-        static const int hashGroups = 8000;
+        static const int hashGroups = 10000;
         list<struct jogador> table[hashGroups]; // Lista1, Index 0, Lista 2, Index 1...
         list<struct tags> table_tags[hashGroups];
         list<struct user> table_users[hashGroups];
@@ -210,7 +210,6 @@ void HashTable::insertPlayer(int id, string posicoes, float rating, int count)
     if(!idExiste)
     {
         lista.emplace_back(id, posicoes, rating, count);
-        cout << "Novo jogador adicionado." << endl;
     }
 
     return;
@@ -218,6 +217,7 @@ void HashTable::insertPlayer(int id, string posicoes, float rating, int count)
 
 void HashTable::searchPlayer(int id, string player_name)
 {
+    cout << "entrou" << endl;
     int hashValue = hashFunction(id);
     auto& lista = table[hashValue];
     auto ptLista = begin(lista);

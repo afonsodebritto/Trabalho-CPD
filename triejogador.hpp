@@ -13,6 +13,22 @@ struct TrieNode
     int id;
 };
 
+struct jogador
+{
+    string nome;
+    int id;
+};
+
+struct jogador getJogador(string nome, int id)
+{
+    struct jogador player;
+
+    player.id = id;
+    player.nome = nome;
+
+    return player;
+};
+
 // Cria um nodo da árvore
 struct TrieNode* getNode(void)
 {
@@ -63,14 +79,14 @@ bool search(struct TrieNode* root, string nome)
     return(ptArvore->fim_palavra);
 }
 
-void collectWords(struct TrieNode* root, string prefix)
+vector<struct jogador> collectWords(struct TrieNode* root, string prefix, vector<struct jogador>& names)
 {
     if(root == nullptr)
-        return;
+        return names;
 
     if(root->fim_palavra)
     {
-        cout << prefix << endl; 
+        names.push_back(getJogador(prefix, root->id));
     }
 
     for(int i = 0; i < ASCII_SIZE; i++)
@@ -78,12 +94,14 @@ void collectWords(struct TrieNode* root, string prefix)
         if(root->filhos[i])
         {
             char ch = i;
-            collectWords(root->filhos[i], (prefix + ch));
+            collectWords(root->filhos[i], (prefix + ch), names);
         }
     }
+
+    return names;
 }
 
-void searchPrefix(struct TrieNode* root, string prefix)
+vector<struct jogador> searchPrefix(struct TrieNode* root, string prefix, vector<struct jogador>& names)
 {
     struct TrieNode* ptArvore = root;
 
@@ -91,9 +109,12 @@ void searchPrefix(struct TrieNode* root, string prefix)
     {
         int index = prefix[i];
         if(index < 0 || index >= ASCII_SIZE)
-            return;
+            return names;
         ptArvore = ptArvore->filhos[index];
     }
 
-    collectWords(ptArvore, prefix);
+    names = collectWords(ptArvore, prefix, names);
+
+    cout << names[0].nome << endl;
+    return names;
 }
