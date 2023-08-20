@@ -1,5 +1,9 @@
+#ifndef TRIEJOGADOR_HPP
+#define TRIEJOGADOR_HPP
+
 #include <iostream>
 #include <vector>
+#include <list>
 
 using namespace std;
 
@@ -13,20 +17,10 @@ struct TrieNode
     int id;
 };
 
-struct jogador
+struct player
 {
     string nome;
     int id;
-};
-
-struct jogador getJogador(string nome, int id)
-{
-    struct jogador player;
-
-    player.id = id;
-    player.nome = nome;
-
-    return player;
 };
 
 // Cria um nodo da árvore
@@ -79,14 +73,15 @@ bool search(struct TrieNode* root, string nome)
     return(ptArvore->fim_palavra);
 }
 
-vector<struct jogador> collectWords(struct TrieNode* root, string prefix, vector<struct jogador>& names)
+vector<struct player> collectWords(struct TrieNode* root, string prefix, vector<struct player> players)
 {
     if(root == nullptr)
-        return names;
+        return players;
 
     if(root->fim_palavra)
     {
-        names.push_back(getJogador(prefix, root->id));
+        cout << players[0].nome << endl;
+        players.push_back({prefix, root->id});
     }
 
     for(int i = 0; i < ASCII_SIZE; i++)
@@ -94,27 +89,31 @@ vector<struct jogador> collectWords(struct TrieNode* root, string prefix, vector
         if(root->filhos[i])
         {
             char ch = i;
-            collectWords(root->filhos[i], (prefix + ch), names);
+            collectWords(root->filhos[i], (prefix + ch), players);
         }
     }
 
-    return names;
+    return players;
 }
 
-vector<struct jogador> searchPrefix(struct TrieNode* root, string prefix, vector<struct jogador>& names)
+vector<struct player> searchPrefix(struct TrieNode* root, string prefix)
 {
+    vector<struct player> players;
     struct TrieNode* ptArvore = root;
 
     for(int i = 0; i < prefix.length(); i++)
     {
         int index = prefix[i];
         if(index < 0 || index >= ASCII_SIZE)
-            return names;
+            return players;
         ptArvore = ptArvore->filhos[index];
     }
 
-    names = collectWords(ptArvore, prefix, names);
+    collectWords(ptArvore, prefix, players);
 
-    cout << names[0].nome << endl;
-    return names;
+    for(struct player jogador : players)
+        cout << jogador.id << jogador.nome << endl;
+    return players;
 }
+
+#endif // TRIEJOGADOR_HPP

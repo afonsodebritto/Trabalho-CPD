@@ -1,3 +1,6 @@
+#ifndef HASHTABLE_HPP
+#define HASHTABLE_HPP
+
 #include <iostream>
 #include <list>
 #include <string>
@@ -20,8 +23,8 @@ class HashTable
         float rating;
         int count;
 
-        jogador(int id, const string& positions, float player_rating, int player_count)
-            : so_fifa_id(id), player_positions(positions), rating(player_rating), count(player_count)
+        jogador(int so_fifa_id, const string& player_positions, float player_rating, int player_count)
+            : so_fifa_id(so_fifa_id), player_positions(player_positions), rating(player_rating), count(player_count)
         {
         }
     };
@@ -70,7 +73,7 @@ class HashTable
         list<struct grade> table_grade[hashGroups];
         int hashFunction(int key);
         void insertPlayer(int id, string posicoes, float rating, int count);
-        void searchPlayer(int id, string nome);
+        void searchPlayer(int id);
         void insertTag(string tag, int id);
         void searchTag(string tag);
         void insertUser(int userID, int playerID);
@@ -200,6 +203,7 @@ void HashTable::insertPlayer(int id, string posicoes, float rating, int count)
         if(ptLista->so_fifa_id == id)
         {
             idExiste = true;
+            //ptLista->player_name = nome;
             ptLista->player_positions = posicoes;
             ptLista->rating = rating;
             ptLista->count = count;
@@ -215,7 +219,7 @@ void HashTable::insertPlayer(int id, string posicoes, float rating, int count)
     return;
 }
 
-void HashTable::searchPlayer(int id, string player_name)
+void HashTable::searchPlayer(int id)
 {
     cout << "entrou" << endl;
     int hashValue = hashFunction(id);
@@ -230,7 +234,7 @@ void HashTable::searchPlayer(int id, string player_name)
         {
             idExiste = true;
             cout << ptLista->so_fifa_id << " "
-                 << player_name << " "
+                 //<< //ptLista->player_name << " "
                  << ptLista->player_positions << " " 
                  << ptLista->count << endl;
             break;
@@ -370,3 +374,5 @@ void HashTable::searchUser(int userID)
         cout << "User nao encontrado" << endl;
     return;
 }
+
+#endif // HASHTABLE_HPP

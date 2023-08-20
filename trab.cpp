@@ -131,20 +131,16 @@ int main()
 
         insert(raiz, name, sofifa);
 
-
-       
-
     }
 
     playerscsv.close();
 
-    HT_PLAYER.searchPlayer(158023, "Lionel Andres Messi Cuccittini");
-    vector<struct jogador> players = searchPrefix(raiz, "Fer", players);
-    cout << players[0].nome << endl;
-    for(struct jogador player_atual : players)
-    {
-        HT_PLAYER.searchPlayer(player_atual.id, player_atual.nome);
-    }
+    cout << "aqui" << endl;
+    //HT_PLAYER.searchPlayer(158023);
+    vector<struct player> jogadores = searchPrefix(raiz, "Fer");
+    cout << "terminou" << endl;
+    cout << jogadores[0].id << jogadores[0].nome << endl;
+    cout << "aqui" << endl;
         
 
     return 0;
