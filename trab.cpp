@@ -147,9 +147,11 @@ int main()
         std::string command;
         iss >> command; // Extract the command
 
+        std::vector<std::string> parameters;
         std::string parameter;
-        iss >> parameter; // Extract the parameter
-
+        while (iss >> parameter) {
+            parameters.push_back(parameter); // Extract remaining parts as parameters
+        }
         // Now you have the command and parameter separated
         // std::cout << "Command: " << command << std::endl;
         // std::cout << "Parameter: " << parameter << std::endl;
@@ -157,7 +159,7 @@ int main()
         if (command == "player") {
             // Call 2.1, onde a pesquisa tem por objetivo retornar a lista de jogadores cujo nome começa com um texto 
             // que pode ser o prefixo ou texto completo do nome de um jogador. Todos os jogadores que satisfizerem o texto de consulta devem ser retornados.
-            vector<int> jogadores = searchPrefix(raiz, parameter);
+            vector<int> jogadores = searchPrefix(raiz, parameters[0]);
 
             for(int id : jogadores){
                 HT_PLAYER.searchPlayer(id);
@@ -167,8 +169,26 @@ int main()
 
         if (command == "user")
         {
-            HT_USER.searchUser(stoi(parameter));
+            vector<int> user = HT_USER.searchUser(stoi(parameters[0]));
+
+            for(int id : user)
+            {
+                HT_PLAYER.searchPlayer(id);
+            }
         }
+
+        // Access the first 3 characters of the command
+        std::string firstThreeCharacters = command.substr(0, 3);
+
+        // Store the rest of the characters in another variable
+        std::string restOfCharacters = command.substr(3);
+
+
+        if (firstThreeCharacters == "top")
+        {
+            
+        }
+
         // Add more command cases here
 
         else if (command == "exit") {
@@ -177,6 +197,7 @@ int main()
             std::cout << "Unknown command." << std::endl;
         }
     }
+
 
     return 0;
 }

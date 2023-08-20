@@ -283,23 +283,6 @@ void HashTable::insertTag(string tag, int id)
     return;
 }
 
-/*
-void HashTable::printTable()
-{
-    for(int i{}; i < hashGroups; i++)
-    {
-        if(table[i].size() == 0) continue;
-
-        auto ptLista = table[i].begin();
-        for(; ptLista != table[i].end(); ptLista++)
-        {
-            cout << "so_fifa_id: " << ptLista->so_fifa_id << endl <<
-            " player_name: " << ptLista->player_name <<
-            " player_positions: " << ptLista->player_positions << endl;
-        }
-    }
-}
-*/
 
 void HashTable::searchTag(string tag)
 {
