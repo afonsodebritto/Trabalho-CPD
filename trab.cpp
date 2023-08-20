@@ -133,11 +133,49 @@ int main()
 
     playerscsv.close();
 
-    //HT_PLAYER.searchPlayer(158023);
-    vector<struct player> jogadores = searchPrefix(raiz, "Fer");
+    
 
-    for(struct player jogador : jogadores)
-        HT_PLAYER.searchPlayer(jogador.id, jogador.nome);
+    std::string input;
+    
+
+    while (true) {
+        std::cout << "Enter a command: ";
+
+        std::getline(std::cin, input);
+
+        std::istringstream iss(input);
+        std::string command;
+        iss >> command; // Extract the command
+
+        std::string parameter;
+        iss >> parameter; // Extract the parameter
+
+        // Now you have the command and parameter separated
+        // std::cout << "Command: " << command << std::endl;
+        // std::cout << "Parameter: " << parameter << std::endl;
+
+        if (command == "player") {
+            // Call 2.1, onde a pesquisa tem por objetivo retornar a lista de jogadores cujo nome começa com um texto 
+            // que pode ser o prefixo ou texto completo do nome de um jogador. Todos os jogadores que satisfizerem o texto de consulta devem ser retornados.
+            vector<struct player> jogadores = searchPrefix(raiz, parameter);
+
+            for(struct player jogador : jogadores){
+                HT_PLAYER.searchPlayer(jogador.id, jogador.nome);
+            }
+
+        }
+        // Add more command cases here
+
+        else if (command == "exit") {
+            break;
+        } else {
+            std::cout << "Unknown command." << std::endl;
+        }
+    }
+
+
+
+    
 
         
 
