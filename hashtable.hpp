@@ -353,6 +353,22 @@ vector<int> HashTable::searchTag_returnIDS(string tag)
     return;
 }
 
+std::vector<std::string> extractQuotedParameters(const std::string& input) {
+    std::vector<std::string> parameters;
+    std::istringstream iss(input);
+
+    std::string parameter;
+    while (iss >> parameter) {
+        if (parameter.front() == '\'' && parameter.back() == '\'') {
+            // Remove single quotes and add to parameters
+            parameters.push_back(parameter.substr(1, parameter.size() - 2));
+            (*n_parametros)++;
+        }
+    }
+
+    return parameters;
+}
+
 void HashTable::insertUser(int userID, int playerID, float playerGrade)
 {
     int hashValue = hashFunction(userID);

@@ -12,9 +12,14 @@
 
 using namespace std;
 
+int valor = 0;
+int* n_parametros = &valor;
+
 int main()
 {
     cout <<  "." << endl;
+
+
     
 
     //pre-processing data
@@ -158,16 +163,14 @@ int main()
 
 
 
-        while (iss >> parameter) {
-            parameters.push_back(parameter); // Extract remaining parts as parameters
-        }
-        // Now you have the command and parameter separated
-        // std::cout << "Command: " << command << std::endl;
-        // std::cout << "Parameter: " << parameter << std::endl;
 
         if (command == "player") {
             // Call 2.1, onde a pesquisa tem por objetivo retornar a lista de jogadores cujo nome começa com um texto 
             // que pode ser o prefixo ou texto completo do nome de um jogador. Todos os jogadores que satisfizerem o texto de consulta devem ser retornados.
+
+            while (iss >> parameter) {
+                parameters.push_back(parameter); // Extract remaining parts as parameters
+            }
             vector<int> jogadores = searchPrefix(raiz, parameters[0]);
 
             for(int id : jogadores){
@@ -176,6 +179,9 @@ int main()
 
         }else if (command == "user")
         {
+            while (iss >> parameter) {
+                parameters.push_back(parameter); // Extract remaining parts as parameters
+            }
             HT_USER.searchUser(stoi(parameters[0]));
 
         }else if (firstThreeCharacters == "top")
@@ -183,6 +189,7 @@ int main()
             
         }else if (command == "tags")
         {
+            parameters = extractQuotedParameters(input);
 
         }else if (command == "exit") {
             break;
