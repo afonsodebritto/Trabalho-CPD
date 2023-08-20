@@ -149,6 +149,15 @@ int main()
 
         std::vector<std::string> parameters;
         std::string parameter;
+
+        // Access the first 3 characters of the command
+        std::string firstThreeCharacters = command.substr(0, 3);
+
+        // Store the rest of the characters in another variable
+        std::string restOfCharacters = command.substr(3);
+
+
+
         while (iss >> parameter) {
             parameters.push_back(parameter); // Extract remaining parts as parameters
         }
@@ -165,31 +174,17 @@ int main()
                 HT_PLAYER.searchPlayer(id);
             }
 
-        }
-
-        if (command == "user")
+        }else if (command == "user")
         {
-            vector<int> user = HT_USER.searchUser(stoi(parameters[0]));
+            HT_USER.searchUser(stoi(parameters[0]));
 
-            for(int id : user)
-            {
-                HT_PLAYER.searchPlayer(id);
-            }
-        }
-
-        // Access the first 3 characters of the command
-        std::string firstThreeCharacters = command.substr(0, 3);
-
-        // Store the rest of the characters in another variable
-        std::string restOfCharacters = command.substr(3);
-
-
-        if (firstThreeCharacters == "top")
+        }else if (firstThreeCharacters == "top")
         {
             
-        }
+        }else if (command == "tags")
+        {
 
-        if (command == "exit") {
+        }else if (command == "exit") {
             break;
         } else {
             std::cout << "Unknown command." << std::endl;
