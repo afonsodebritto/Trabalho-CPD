@@ -8,6 +8,8 @@
 
 using namespace std;
 
+//kenji
+
 class HashTable
 {
     private:
