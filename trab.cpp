@@ -10,7 +10,6 @@
 #include "./hashtable.hpp"
 #include "./triejogador.hpp"
 
-using namespace aria::csv;
 using namespace std;
 
 int main()
