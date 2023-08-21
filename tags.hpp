@@ -1,3 +1,6 @@
+#ifndef TAGS_HPP
+#define TAGS_HPP
+
 #include <iostream>
 #include <list>
 #include <string>
@@ -32,7 +35,7 @@ class HashTableTags
         int hashFunction(int key);
         void insertTag(string tag, int id);
         void searchTag(string tag);
-        vector<int> HashTableTags::searchTag_returnIDS(string tag);
+        vector<int> searchTag_returnIDS(string tag);
 };
 
 
@@ -153,7 +156,7 @@ vector<int> HashTableTags::searchTag_returnIDS(string tag)
 
     if(!idExiste)
         cout << "Tag nao encontrada" << endl;
-    return;
+    return ptLista->ids;
 }
 
 
@@ -172,3 +175,5 @@ std::vector<std::string> extractQuotedParameters(const std::string& input) {
 
     return parameters;
 }
+
+#endif

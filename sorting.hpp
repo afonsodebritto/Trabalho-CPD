@@ -1,3 +1,6 @@
+#ifndef SORTING_HPP
+#define SORTING_HPP
+
 #include <iostream>
 #include <vector>
 using namespace std;
@@ -54,3 +57,5 @@ void quickSort(vector<pair<int,float>>& arr, int start, int end)
     // Sorting the right part
     quickSort(arr, p + 1, end);
 }
+
+#endif

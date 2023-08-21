@@ -1,3 +1,6 @@
+#ifndef PLAYER_HPP
+#define PLAYER_HPP
+
 #include <iostream>
 #include <list>
 #include <string>
@@ -118,4 +121,8 @@ float HashTablePlayer::getRating(int id)
 
     if(!idExiste)
         return -1;
+
+    return -1;
 }
+
+#endif
