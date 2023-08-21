@@ -7,8 +7,12 @@
 #include <climits>
 #include <iostream>
 #include <iomanip>
-#include "./hashtable.hpp"
+#include "./tags.hpp"
 #include "./triejogador.hpp"
+#include "./player.hpp"
+#include "./user.hpp"
+#include "./grades.hpp"
+#include "./sorting.hpp"
 
 using namespace std;
 
@@ -35,10 +39,10 @@ int main()
     }
     
 
-    HashTable HT_PLAYER;
-    HashTable HT_USER;
-    HashTable HT_GRADE;
-    HashTable HT_TAGS;
+    HashTablePlayer HT_PLAYER;
+    HashTableUser HT_USER;
+    HashTableGrades HT_GRADE;
+    HashTableTags HT_TAGS;
 
 
     std::string line;
@@ -225,12 +229,29 @@ int main()
             }
             HT_USER.searchUser(stoi(parameters[0]));
 
-        }else if (firstThreeCharacters == "top")
+        }
+        else if (firstThreeCharacters == "top")
         {
-            
-        }else if (command == "tags")
+            int quantidade = 0;
+            vector<int> idsTopTag = HT_TAGS.searchTag_returnIDS(parameters[0]);
+            vector<pair<int, float>> idsTopTag_rating;
+            for(int player_id : idsTopTag)
+            {
+                float player_rating = HT_PLAYER.getRating(player_id);
+                if(player_rating != -1)
+                {
+                    idsTopTag_rating.push_back(make_pair(player_id, player_rating));
+                    quantidade++;
+                }
+                    
+            }
+            quickSort(idsTopTag_rating, 0, quantidade - 1);
+            for(int i = 0; i < stoi(restOfCharacters); i++)
+                HT_PLAYER.searchPlayer(idsTopTag_rating[i].first);
+        }
+        else if (command == "tags")
         {
-            parameters = extractQuotedParameters(input);
+            //parameters = extractQuotedParameters(input);
 
             std::vector<std::vector<int>> vectorOfVectors;
             vector<int> result_tags;

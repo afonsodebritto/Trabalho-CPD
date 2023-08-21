@@ -5,11 +5,11 @@ using namespace std;
 int partition(vector<pair<int,float>>& arr, int start, int end)
 {
  
-    int pivot = arr[start].first;
+    int pivot = arr[start].second;
  
     int count = 0;
     for (int i = start + 1; i <= end; i++) {
-        if (arr[i].first <= pivot)
+        if (arr[i].second <= pivot)
             count++;
     }
  
@@ -22,11 +22,11 @@ int partition(vector<pair<int,float>>& arr, int start, int end)
  
     while (i < pivotIndex && j > pivotIndex) {
  
-        while (arr[i].first <= pivot) {
+        while (arr[i].second <= pivot) {
             i++;
         }
  
-        while (arr[j].first > pivot) {
+        while (arr[j].second > pivot) {
             j--;
         }
  
