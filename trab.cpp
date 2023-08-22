@@ -32,8 +32,7 @@ int main()
 
 
     //começo da leitura de rating.csv
-
-    std::ifstream ratingcsv ("minirating.csv");
+    std::ifstream ratingcsv ("rating.csv");
 
     if (!ratingcsv.is_open()) {
         std::cerr << "Erro ao abrir o arquivo." << std::endl;
@@ -159,7 +158,7 @@ int main()
     string tag;  //reusar sofifa_id da leitura do rating.csv
     //reusar int sofifa também
 
-    std::cout << "achei ";
+
 
     while (std::getline(tagscsv, user_id, ',')) {
  
@@ -266,19 +265,25 @@ int main()
             int* size;
             size = &end;
 
-            vector<pair<int,float>> players = HT_PLAYER.runTable(parameters[0],  size);
+            std::string withoutQuotes = removeSingleQuotes(parameters[0]);
+
+            vector<pair<int,float>> players = HT_PLAYER.runTable(withoutQuotes,  size);
 
             quickSort(players, 0, (*size) - 1);
 
             for(int i = 0; i < stoi(restOfCharacters); i++)
             {
+                /*
                 if(i == (*size))
                 {
                     cout << "Numero insuficiente de avaliacoes do usuario" << endl;
                     break;
                 }
+                */
 
-                int id = players[i].first;
+                (*size)--;
+                int id = players[*size].first;
+                
                 HT_PLAYER.searchPlayer(id);
             } 
 

@@ -135,7 +135,9 @@ vector<pair<int, float>> HashTablePlayer::runTable(string posicao, int* size)
         auto ptLista = begin(lista);
         for(; ptLista != end(lista); ptLista++)
         {
-            if(ptLista->player_positions.find(posicao) != string::npos && ptLista->count >= 1000)
+            bool flag;
+            flag = ptLista->player_positions.find(posicao) != string::npos;
+            if(flag && ptLista->count >= 1000)
             {
                 players.push_back(make_pair(ptLista->so_fifa_id, ptLista->rating));
                 (*size)++;
@@ -144,4 +146,17 @@ vector<pair<int, float>> HashTablePlayer::runTable(string posicao, int* size)
     }
     return players;
 }
+
+std::string removeSingleQuotes(const std::string& input) {
+    std::string result;
+    for (char c : input) {
+        if (c != '\'') {
+            result += c;
+        }
+    }
+    return result;
+}
+
+
+
 #endif
