@@ -261,7 +261,26 @@ int main()
             while (iss >> parameter) {
                 parameters.push_back(parameter); // Extract remaining parts as parameters
             }
+            
+            int end = 0;
+            int* size;
+            size = &end;
 
+            vector<pair<int,float>> players = HT_PLAYER.runTable(parameters[0],  size);
+
+            quickSort(players, 0, (*size) - 1);
+
+            for(int i = 0; i < stoi(restOfCharacters); i++)
+            {
+                if(i == (*size))
+                {
+                    cout << "Numero insuficiente de avaliacoes do usuario" << endl;
+                    break;
+                }
+
+                int id = players[i].first;
+                HT_PLAYER.searchPlayer(id);
+            } 
 
         }
         else if (command == "tags")

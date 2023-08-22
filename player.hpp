@@ -35,7 +35,7 @@ class HashTablePlayer
         void insertPlayer(int id, string posicoes, string nome, float rating, int count);
         void searchPlayer(int id);
         float getRating(int id);
-        vector<pair<int, float>> runTable(string posicao);
+        vector<pair<int, float>> runTable(string posicao, int* size);
 };
 
 int HashTablePlayer::hashFunction(int key)
@@ -126,7 +126,7 @@ float HashTablePlayer::getRating(int id)
     return -1;
 }
 
-vector<pair<int, float>> HashTablePlayer::runTable(string posicao)
+vector<pair<int, float>> HashTablePlayer::runTable(string posicao, int* size)
 {
     vector<pair<int, float>> players;
     for(int i = 0; i < hashGroups; i++)
@@ -136,7 +136,10 @@ vector<pair<int, float>> HashTablePlayer::runTable(string posicao)
         for(; ptLista != end(lista); ptLista++)
         {
             if(ptLista->player_positions.find(posicao) != string::npos && ptLista->count >= 1000)
+            {
                 players.push_back(make_pair(ptLista->so_fifa_id, ptLista->rating));
+                (*size)++;
+            }
         }
     }
     return players;
