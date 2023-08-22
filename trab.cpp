@@ -16,12 +16,13 @@
 
 using namespace std;
 
-int valor = 0;
-int* n_parametros = &valor;
 
 int main()
 {
     cout <<  "." << endl;
+
+    int valor = 0;
+    int* n_parametros = &valor;
 
 
     
@@ -157,14 +158,19 @@ int main()
     string tag;  //reusar sofifa_id da leitura do rating.csv
     //reusar int sofifa também
 
+    std::cout << "achei ";
+
     while (std::getline(tagscsv, user_id, ',')) {
  
 
         // Use getline para separar as colunas usando a vírgula como delimitador
-        std::getline(playerscsv, sofifa_id, ',');
-        std::getline(playerscsv, tag, '\n');
+        std::getline(tagscsv, sofifa_id, ',');
 
         sofifa = stoi(sofifa_id);
+
+        std::getline(tagscsv, tag, '\n');
+
+
 
         
 
@@ -178,7 +184,7 @@ int main()
 
 
 
-
+    
 
 
 
@@ -251,14 +257,14 @@ int main()
         }
         else if (command == "tags")
         {
-            //parameters = extractQuotedParameters(input);
+            parameters = extractQuotedParameters(input, n_parametros);
 
             std::vector<std::vector<int>> vectorOfVectors;
             vector<int> result_tags;
 
             for (int i = 0; i < valor; ++i) {
                 std::vector<int> innerVector;
-                // Fill the innerVector with some data (for example, 1, 2, 3)
+                
                 innerVector = HT_TAGS.searchTag_returnIDS(parameters[i]);
                 vectorOfVectors.push_back(innerVector);
             }

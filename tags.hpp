@@ -160,7 +160,7 @@ vector<int> HashTableTags::searchTag_returnIDS(string tag)
 }
 
 
-std::vector<std::string> extractQuotedParameters(const std::string& input) {
+std::vector<std::string> extractQuotedParameters(const std::string& input, int* n_parametros) {
     std::vector<std::string> parameters;
     std::istringstream iss(input);
 
