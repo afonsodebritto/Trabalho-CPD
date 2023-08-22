@@ -4,11 +4,13 @@
 #include <iostream>
 #include <vector>
 using namespace std;
+
+
  
 int partition(vector<pair<int,float>>& arr, int start, int end)
 {
  
-    int pivot = arr[start].second;
+    float pivot = arr[start].second;
  
     int count = 0;
     for (int i = start + 1; i <= end; i++) {
@@ -42,8 +44,7 @@ int partition(vector<pair<int,float>>& arr, int start, int end)
 }
  
 void quickSort(vector<pair<int,float>>& arr, int start, int end)
-{
- 
+{ 
     // base case
     if (start >= end)
         return;
@@ -57,5 +58,6 @@ void quickSort(vector<pair<int,float>>& arr, int start, int end)
     // Sorting the right part
     quickSort(arr, p + 1, end);
 }
+
 
 #endif

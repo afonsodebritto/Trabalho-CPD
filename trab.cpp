@@ -269,21 +269,17 @@ int main()
 
             vector<pair<int,float>> players = HT_PLAYER.runTable(withoutQuotes,  size);
 
-            quickSort(players, 0, (*size) - 1);
+
+            quickSort(players, 0, end - 1);
+
+
 
             for(int i = 0; i < stoi(restOfCharacters); i++)
             {
-                /*
-                if(i == (*size))
-                {
-                    cout << "Numero insuficiente de avaliacoes do usuario" << endl;
-                    break;
-                }
-                */
 
                 (*size)--;
                 int id = players[*size].first;
-                
+
                 HT_PLAYER.searchPlayer(id);
             } 
 
