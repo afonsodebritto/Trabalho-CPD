@@ -10,7 +10,6 @@
 
 using namespace std;
 
-//kenji
 
 class HashTableUser
 {

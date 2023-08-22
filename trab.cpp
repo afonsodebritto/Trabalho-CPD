@@ -7,6 +7,7 @@
 #include <climits>
 #include <iostream>
 #include <iomanip>
+#include <set>
 #include "./tags.hpp"
 #include "./triejogador.hpp"
 #include "./player.hpp"
@@ -271,8 +272,13 @@ int main()
 
             result_tags = intersectionOfLists(vectorOfVectors);
 
+            std::set<int> printedPlayers; // Set to keep track of printed players
+
             for(int id2 : result_tags){
-                HT_PLAYER.searchPlayer(id2);
+                if (printedPlayers.find(id2) == printedPlayers.end()) {
+                    HT_PLAYER.searchPlayer(id2);
+                    printedPlayers.insert(id2); // Mark player as printed
+                }
             }
 
 
