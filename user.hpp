@@ -30,7 +30,7 @@ class HashTableUser
         list<struct user> table_users[hashGroups];
         int hashFunction(int key);
         void insertUser(int userID, int playerID, float playerGrade);
-        void searchUser(int userID);
+        vector<pair<int,float>> searchUser(int userID, int* size);
 };
 
 
@@ -68,8 +68,9 @@ void HashTableUser::insertUser(int userID, int playerID, float playerGrade)
     return;
 }
 
-void HashTableUser::searchUser(int userID)
+vector<pair<int,float>> HashTableUser::searchUser(int userID, int* size)
 {
+    vector<pair<int,float>> usuario_players;
     int hashValue = hashFunction(userID);
 
     auto& lista = table_users[hashValue];
@@ -80,30 +81,18 @@ void HashTableUser::searchUser(int userID)
         if(ptLista->userID == userID)
         {
             idExiste = true;
-            vector<pair<int,float>> usuario_atual;
-            int end = 0;
             for(auto n : ptLista->ids)
             {
-                usuario_atual.push_back(n);
-                end++;
+                usuario_players.push_back(n);
+                (*size)++;   
             }
-                
-            quickSort(usuario_atual, 0, end - 1);
+        
+        quickSort(usuario_players, 0, (*size) - 1);
+        return usuario_players;
 
-            int controle = 20;
-            while(controle > 0)
-            {
-                if(end <= 0)
-                    break;
-                cout << usuario_atual[end - 1].first << endl;
-                controle--;
-                end--;
-            }
-            break;
+        break;
         }
     }
 
-    if(!idExiste)
-        cout << "User nao encontrado" << endl;
-    return;
+    return usuario_players;
 }

@@ -234,23 +234,32 @@ int main()
             while (iss >> parameter) {
                 parameters.push_back(parameter); // Extract remaining parts as parameters
             }
-            HT_USER.searchUser(stoi(parameters[0]));
+
+            int end = 0;
+            int* size;
+            size = &end;
+
+            vector<pair<int, float>> usuario_players = HT_USER.searchUser(stoi(parameters[0]), size);
+            if(usuario_players.empty())
+            {
+                cout << "Usuario nao encontrado" << endl;
+            }
+            else
+            {
+                for (int i = (*size) - 1; i >= (*size) - 21; i--) 
+                {
+                    if(i < 0)
+                        break;
+                    int id = usuario_players[i].first;
+                    HT_PLAYER.searchPlayer(id);    
+                }
+            }
 
         }
         else if (firstThreeCharacters == "top")
         {
-            int quantidade = 0;
-            vector<int> idsTopTag = HT_TAGS.searchTag_returnIDS(parameters[0]);
-            vector<pair<int, float>> idsTopTag_rating;
-            for(int player_id : idsTopTag)
-            {
-                float player_rating = HT_PLAYER.getRating(player_id);
-                if(player_rating != -1)
-                {
-                    idsTopTag_rating.push_back(make_pair(player_id, player_rating));
-                    quantidade++;
-                }
-                    
+            while (iss >> parameter) {
+                parameters.push_back(parameter); // Extract remaining parts as parameters
             }
             
             int end = 0;
