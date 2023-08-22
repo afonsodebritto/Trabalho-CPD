@@ -224,9 +224,18 @@ int main()
             }
             vector<int> jogadores = searchPrefix(raiz, parameters[0]);
 
-            for(int id : jogadores){
-                HT_PLAYER.searchPlayer(id);
+            if(jogadores.empty())
+            {
+                cout << "Nenhum jogador encontrado" << endl;
             }
+            else
+            {
+                for(int id : jogadores)
+                {
+                    HT_PLAYER.searchPlayer(id);
+                }
+            }
+            
 
         }else if (command == "user")
         {

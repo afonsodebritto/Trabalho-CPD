@@ -102,6 +102,16 @@ vector<int> searchPrefix(struct TrieNode* root, string prefix)
     for(int i = 0; i < prefix.length(); i++)
     {
         int index = prefix[i];
+
+        // verifica se o prefixo não é de nenhum jogador ou apenas de um jogador
+        if(ptArvore->filhos[index] == NULL)
+        {
+            if(ptArvore->fim_palavra == true)
+            {
+                players.push_back({ptArvore->id});
+            }
+            return players;
+        }
         if(index < 0 || index >= ASCII_SIZE)
             return players;
         ptArvore = ptArvore->filhos[index];
