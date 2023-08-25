@@ -26,7 +26,7 @@ class HashTableUser
     };
 
     public:
-        static const int hashGroups = 10000;
+        static const int hashGroups = 50000;
         list<struct user> table_users[hashGroups];
         int hashFunction(int key);
         void insertUser(int userID, int playerID, float playerGrade);

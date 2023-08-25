@@ -28,7 +28,7 @@ class HashTableGrades
 
 
     public:
-        static const int hashGroups = 10000;
+        static const int hashGroups = 50000;
         list<struct grade> table_grade[hashGroups];
         int hashFunction(int key);
         void insertGrade(int id, float rating);
